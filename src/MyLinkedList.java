@@ -64,6 +64,18 @@ public class MyLinkedList <T> implements Iterable <T>{
 		return n;
 	}
 	
+	private void remove(T t) {
+		int i = -1;
+		Node <T> n = head;
+		while (i < size){
+			n = n.next;
+			i ++;
+			if (n.item.equals(t)) {
+				removeNode(n);
+			}
+		}
+	}
+	
 	public boolean remove(int idx) {
 		if (idx > size -1 ) {
 			return false;
@@ -112,13 +124,26 @@ public class MyLinkedList <T> implements Iterable <T>{
 		return new LinkedListIterator();
 	}
 	
+	public void addAll(Iterable <? extends T> items){
+		for (T t : items) {
+			add(t);
+		}
+	}
+	
+	public void removeAll(Iterable <? extends T> items){
+		for (T t : items) {
+			remove(t);
+		}
+	}
+	
+	
 	private class LinkedListIterator implements Iterator <T>{
 
 		Node <T> current = head;
 		
 		@Override
 		public boolean hasNext() {
-			return current.next != tail;
+			return current != null && current.next != tail;
 		}
 
 		@Override
@@ -132,12 +157,11 @@ public class MyLinkedList <T> implements Iterable <T>{
 		}
 		
 		public void remove() {
-			removeNode(current);
-			current = current.next;
-			if (current == tail) {
-				current = null;
+			if (current == head) {
+				throw new UnsupportedOperationException();
 			}
-			
+			removeNode(current);
+			current = current.prev;
 		}
 	
 	}
