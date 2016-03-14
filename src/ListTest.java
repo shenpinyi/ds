@@ -1,10 +1,33 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class ListTest {
 
 	public static void main(String[] args) {
-		test12();
+		test13();
 	}
+	
+	public static void test13() {
+		MyArrayList <Integer> l = new MyArrayList <Integer> ();
+		for (int i = 2; i < 30; i += 2){
+			l.add(i);
+		}
+		System.out.println(l);
+		l.add(0, 0);
+		l.add(3, 3);
+		System.out.println(l);
+		System.out.println(l.contains(3));
+		System.out.println(l.contains(30));
+		
+		//l.clear();
+		//System.out.println(l);
+		l.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6}));
+		System.out.println(l);
+		
+	}
+	
 
 	public static void test01() {
 		MyLinkedList<Integer> l = new MyLinkedList<Integer>();
