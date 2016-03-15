@@ -5,3 +5,5 @@
 /ds/
 /MyOneWayLinkedList.class
 /MyOneWayLinkedList$Node.class
+/MyArrayList.class
+/MyArrayList$MyArrayListIterator.class

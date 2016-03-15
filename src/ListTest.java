@@ -1,12 +1,66 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class ListTest {
 
 	public static void main(String[] args) {
-		test13();
+		//test13();
+		testArrayList();
+		testMyArrayList();
+		
+		
+	}
+	
+	public static void testArrayList() {
+		//test iterator
+		ArrayList <Integer> l = new ArrayList <Integer>();
+		l.addAll(Arrays.asList(new Integer[] {0,1,2,3,4,5,6,7,8,9,10}));
+		ListIterator <Integer> iter = l.listIterator();
+	    System.out.println();
+		System.out.print(iter.next() + " "); //0
+		System.out.print(iter.next() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		System.out.print(iter.previousIndex() + " "); //2
+		System.out.print(iter.previous() + " "); //2
+		System.out.print(iter.previousIndex() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		iter.remove();
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //3
+		iter.remove();
+		//iter.remove(); //exception
+		
+	}
+	
+	public static void testMyArrayList() {
+		//test iterator
+		MyArrayList <Integer> l = new MyArrayList <Integer>();
+		l.addAll(Arrays.asList(new Integer[] {0,1,2,3,4,5,6,7,8,9,10}));
+		ListIterator <Integer> iter = l.listIterator();
+	    System.out.println();
+		System.out.print(iter.next() + " "); //0
+		System.out.print(iter.next() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		System.out.print(iter.previousIndex() + " "); //2
+		System.out.print(iter.previous() + " "); //2
+		System.out.print(iter.previousIndex() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		iter.remove();
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //3
+		iter.remove();
+		//iter.remove(); //exception
 	}
 	
 	public static void test13() {
@@ -25,6 +79,14 @@ public class ListTest {
 		//System.out.println(l);
 		l.addAll(Arrays.asList(new Integer[]{1,2,3,4,5,6}));
 		System.out.println(l);
+		System.out.println(l.containsAll(Arrays.asList(new Integer[]{1,2,3,4,5,6})));
+		System.out.println(l.containsAll(Arrays.asList(new Integer[]{1,2,3,4,5,6,101})));
+		System.out.println(l.get(0));
+		System.out.println(l.get(21));
+		//System.out.println(l.get(22));
+		System.out.println(l.indexOf(0));
+		System.out.println(l.indexOf(6));
+		System.out.println(l.indexOf(101));
 		
 	}
 	
