@@ -39,6 +39,30 @@ public class MyLinkedList<T> implements Iterable<T> {
 	public int size() {
 		return size;
 	}
+	
+	public void addFirst(){
+		
+	}
+
+	public void addLast(){
+		
+	}
+
+	public void getFirst(){
+		
+	}
+
+	public void getLast(){
+		
+	}
+
+	public void removeFirst(){
+		
+	}
+
+	public void removeLast(){
+		
+	}
 
 	public boolean add(T t) {
 		return add(size, t);
