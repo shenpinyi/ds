@@ -15,10 +15,35 @@ public class ListTest {
 //		testMyLinkedList();
 		
 		//3.15 test splice of MyLinkedList
-		testSplice();
+//		testSplice();
 		
+		//3.16 test MyArrayList reverseIterator
+		testReverseIterator();
 		
-		
+	}
+	
+	public static void testReverseIterator(){
+		//test iterator
+		MyArrayList <Integer> l = new MyArrayList <Integer>();
+		l.addAll(Arrays.asList(new Integer[] {10,9,8,7,6,5,4,3,2,1,0}));
+		ListIterator <Integer> iter = l.reverseListIterator();
+	    System.out.println();
+		System.out.print(iter.next() + " "); //0
+		System.out.print(iter.next() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //8
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		System.out.print(iter.previousIndex() + " "); //8
+		System.out.print(iter.previous() + " "); //2
+		System.out.print(iter.previousIndex() + " "); //9
+		System.out.print(iter.nextIndex() + " "); //8
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		iter.remove();
+		System.out.print(iter.nextIndex() + " "); //7
+		System.out.print(iter.next() + " "); //3
+		iter.remove();
+		//iter.remove(); //exception
 	}
 
 	public static void testSplice() {

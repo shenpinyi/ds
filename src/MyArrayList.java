@@ -82,6 +82,81 @@ public class MyArrayList <T> implements List <T>{
 		}
 		
 	}
+	
+	private class MyArrayListReverseIterator implements ListIterator <T> {
+		
+		int cursor = size - 1;
+		int lastRet = -1;
+		
+		public MyArrayListReverseIterator(){
+			cursor = size - 1;
+			lastRet = -1;
+		}
+
+		@Override
+		public void add(T e) {
+			MyArrayList.this.add(cursor + 1, e);
+			lastRet = cursor + 1;
+		}
+
+		@Override
+		public boolean hasNext() {
+			return cursor != 0;
+		}
+
+		@Override
+		public boolean hasPrevious() {
+			return cursor < size - 1;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public T next() {
+			lastRet = cursor;
+			return (T) l[cursor--];
+		}
+
+		@Override
+		public int nextIndex() {
+			return cursor;
+		}
+
+		@SuppressWarnings("unchecked")
+		@Override
+		public T previous() {
+			if (cursor == size - 1) {
+				throw new NoSuchElementException();
+			}
+			cursor ++;
+			lastRet = cursor;
+			return (T) l[cursor];
+		}
+
+		@Override
+		public int previousIndex() {
+			return cursor + 1;
+		}
+
+		@Override
+		public void remove() {
+			if (lastRet == -1) {
+				throw new IllegalStateException();
+			}
+			MyArrayList.this.remove(lastRet);
+			lastRet = -1;
+		}
+
+		@Override
+		public void set(T e) {
+			if (lastRet == -1) {
+				throw new IllegalStateException();
+			}
+			MyArrayList.this.set(lastRet, e);
+		}
+		
+	}
+
+	
 	final static int DEF_CAPACITY = 10;
 	
 	int size = 0;
@@ -200,6 +275,10 @@ public class MyArrayList <T> implements List <T>{
 	@Override
 	public ListIterator<T> listIterator() {
 		return new MyArrayListIterator();
+	}
+
+	public ListIterator<T> reverseListIterator() {
+		return new MyArrayListReverseIterator();
 	}
 	
 	@Override
