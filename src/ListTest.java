@@ -23,6 +23,31 @@ public class ListTest {
 		//3.17 test concurrent modification
 //		testConModiIterator();
 		
+		//3.18
+		test18();
+		
+	}
+	
+	public static void test18(){
+		MyLinkedList <Integer> l = new MyLinkedList<Integer>();
+		
+		for (int i = 0; i < 10; i++) {
+			l.add(i);
+		}
+		System.out.println(l); //0,1,2,3,4,5,6,7,8,9
+		System.out.println(l.getFirst());//0
+		System.out.println(l.getLast());//9
+		l.removeFirst();
+		System.out.println(l);//1,2,3,4,5,6,7,8,9
+		l.removeLast();
+		System.out.println(l);//1,2,3,4,5,6,7,8
+		l.addFirst(100);
+		System.out.println(l);//100,1,2,3,4,5,6,7,8
+		l.addLast(200);
+		System.out.println(l);//100,1,2,3,4,5,6,7,8,200
+		l.remove(1);
+		l.add(1, 300);
+		System.out.println(l);//100,300,2,3,4,5,6,7,8,200
 	}
 	
 	public static void testConModiIterator(){

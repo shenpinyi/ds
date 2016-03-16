@@ -40,28 +40,38 @@ public class MyLinkedList<T> implements Iterable<T> {
 		return size;
 	}
 	
-	public void addFirst(){
-		
+	public void addFirst(T t){
+		addBefore(head.next, t);
 	}
 
-	public void addLast(){
-		
+	public void addLast(T t){
+		addBefore(tail, t);
 	}
 
-	public void getFirst(){
-		
+	public T getFirst(){
+		return head.next.item;
 	}
 
-	public void getLast(){
-		
+	public T getLast(){
+		return tail.prev.item;
 	}
 
-	public void removeFirst(){
-		
+	public T removeFirst(){
+		Node <T> n = head.next;
+		if (n != tail) {
+			remove(n);
+			return n.item;
+		}
+		return null;
 	}
 
-	public void removeLast(){
-		
+	public T removeLast(){
+		Node <T> n = tail.prev;
+		if (n != head) {
+			remove(n);
+			return n.item;
+		}
+		return null;
 	}
 
 	public boolean add(T t) {
@@ -69,18 +79,25 @@ public class MyLinkedList<T> implements Iterable<T> {
 	}
 
 	public boolean add(int idx, T t) {
-		Node<T> node = new Node<T>();
-		node.item = t;
-		Node<T> current = find(idx);
-		current.prev.next = node;
-		node.prev = current.prev;
-		node.next = current;
-		current.prev = node;
-		size++;
+		Node<T> current = getNode(idx);
+		if (current == null) {
+			return false;
+		}
+		addBefore(current, t);
 		return true;
 	}
+	
+	private void addBefore(Node<T> n, T t) {
+		Node<T> node = new Node<T>();
+		node.item = t;
+		n.prev.next = node;
+		node.prev = n.prev;
+		node.next = n;
+		n.prev = node;
+		size++;
+	}
 
-	private Node<T> find(int idx) {
+	private Node<T> getNode(int idx) {
 		int i = -1;
 		Node<T> n = head;
 		while (i < idx && i < size) {
@@ -97,7 +114,7 @@ public class MyLinkedList<T> implements Iterable<T> {
 			n = n.next;
 			i++;
 			if (n.item.equals(t)) {
-				removeNode(n);
+				remove(n);
 			}
 		}
 	}
@@ -107,11 +124,11 @@ public class MyLinkedList<T> implements Iterable<T> {
 			return false;
 		}
 
-		Node<T> n = find(idx);
-		return removeNode(n);
+		Node<T> n = getNode(idx);
+		return remove(n);
 	}
 
-	public boolean removeNode(Node<T> n) {
+	private boolean remove(Node<T> n) {
 		n.next.prev = n.prev;
 		n.prev.next = n.next;
 		size--;
@@ -123,14 +140,14 @@ public class MyLinkedList<T> implements Iterable<T> {
 			return null;
 		}
 
-		return find(idx).item;
+		return getNode(idx).item;
 	}
 
 	public boolean set(int idx, T t) {
 		if (idx > size - 1) {
 			return false;
 		}
-		Node<T> n = find(idx);
+		Node<T> n = getNode(idx);
 		n.item = t;
 		return true;
 	}
@@ -215,7 +232,7 @@ public class MyLinkedList<T> implements Iterable<T> {
 			if (lastRet == null) {
 				throw new IllegalStateException();
 			}
-			removeNode(lastRet);
+			MyLinkedList.this.remove(lastRet);
 			cursorIndex --;
 			lastRet = null;
 		}
