@@ -1,18 +1,58 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.ListIterator;
 
 public class ListTest {
 
 	public static void main(String[] args) {
-		//test13();
-		testArrayList();
-		testMyArrayList();
+
+		//3.13 & 3.14 Implement ListIterator for MyArrayList and MyLinkedList;
+//		testArrayList();
+//		testMyArrayList();
+//		testLinkedList();
+//		testMyLinkedList();
+		
+		//3.15 test splice of MyLinkedList
+		testSplice();
+		
 		
 		
 	}
+
+	public static void testSplice() {
+		MyLinkedList <Integer> la = new MyLinkedList <Integer> ();
+		MyLinkedList <Integer> lb = new MyLinkedList <Integer> ();
+		la.addAll(Arrays.asList(new Integer[] {0,1,2,3,4,5,6,7}));
+		lb.addAll(Arrays.asList(new Integer[]{101,102,103}));
+		
+		System.out.println(la); //0,1,2,3,4,5,6,7
+		System.out.println(lb); //101,102,103
+
+		ListIterator itr = la.listIterator();
+		la.splice(itr, lb);
+		System.out.println(la); //101,102,103,0,1,2,3,4,5,6,7
+		System.out.println(lb); //null
+		
+		lb.addAll(Arrays.asList(new Integer[]{201,202,203}));
+		itr = la.listIterator();
+		itr.next();
+		itr.next();
+		la.splice(itr, lb);
+		System.out.println(la); //101,102,201,202,203,103,0,1,2,3,4,5,6,7
+		System.out.println(lb); //null
+		
+		lb.addAll(Arrays.asList(new Integer[]{301,302,303}));
+		itr = la.listIterator();
+		while(itr.hasNext()){
+			itr.next();
+		}
+		la.splice(itr, lb);
+		System.out.println(la); //101,102,201,202,203,103,0,1,2,3,4,5,6,7,301,302,303
+		System.out.println(lb); //null
+	}
+
 	
 	public static void testArrayList() {
 		//test iterator
@@ -61,6 +101,55 @@ public class ListTest {
 		System.out.print(iter.next() + " "); //3
 		iter.remove();
 		//iter.remove(); //exception
+	}
+
+	public static void testLinkedList() {
+		//test iterator
+		LinkedList <Integer> l = new LinkedList <Integer>();
+		l.addAll(Arrays.asList(new Integer[] {0,1,2,3,4,5,6,7,8,9,10}));
+		ListIterator <Integer> iter = l.listIterator();
+	    System.out.println();
+		System.out.print(iter.next() + " "); //0
+		System.out.print(iter.next() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		System.out.print(iter.previousIndex() + " "); //2
+		System.out.print(iter.previous() + " "); //2
+		System.out.print(iter.previousIndex() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		iter.remove();
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //3
+		iter.remove();
+		//iter.remove(); //exception
+		
+	}
+	public static void testMyLinkedList() {
+		//test iterator
+		MyLinkedList <Integer> l = new MyLinkedList <Integer>();
+		l.addAll(Arrays.asList(new Integer[] {0,1,2,3,4,5,6,7,8,9,10}));
+		ListIterator <Integer> iter = l.listIterator();
+	    System.out.println();
+		System.out.print(iter.next() + " "); //0
+		System.out.print(iter.next() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		System.out.print(iter.previousIndex() + " "); //2
+		System.out.print(iter.previous() + " "); //2
+		System.out.print(iter.previousIndex() + " "); //1
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //2
+		System.out.print(" ");
+		iter.remove();
+		System.out.print(iter.nextIndex() + " "); //2
+		System.out.print(iter.next() + " "); //3
+		iter.remove();
+		//iter.remove(); //exception
+		
 	}
 	
 	public static void test13() {
