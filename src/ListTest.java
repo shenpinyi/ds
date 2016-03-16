@@ -18,9 +18,37 @@ public class ListTest {
 //		testSplice();
 		
 		//3.16 test MyArrayList reverseIterator
-		testReverseIterator();
+//		testReverseIterator();
+		
+		//3.17 test concurrent modification
+//		testConModiIterator();
 		
 	}
+	
+	public static void testConModiIterator(){
+		
+//		ArrayList <Integer> la = new ArrayList <Integer> ();
+//		la.addAll(Arrays.asList(new Integer[]{0,1,2,3,4,5}));
+//	    ListIterator <Integer> iter = la.listIterator();
+//	    iter.next();
+//	    iter.next();
+//	    la.add(6);
+//	    iter.set(4);
+	    
+		MyArrayList <Integer> la = new MyArrayList <Integer> ();
+		la.addAll(Arrays.asList(new Integer[]{0,1,2,3,4,5}));
+	    ListIterator <Integer> iter = la.listIterator();
+	    iter.next();
+	    iter.next();
+	    la.add(6);
+	    ListIterator <Integer> iter2 = la.listIterator();
+	    //la.add(6);
+	    //iter.remove();
+	    iter2.next();
+		
+		
+	}
+	
 	
 	public static void testReverseIterator(){
 		//test iterator

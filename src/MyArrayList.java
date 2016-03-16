@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -11,17 +12,25 @@ public class MyArrayList <T> implements List <T>{
 		
 		int cursor = 0;
 		int lastRet = -1;
+		int modiCountItr = -1;
 		
 		public MyArrayListIterator(){
 			cursor = 0;
 			lastRet = -1;
+			modiCountItr = MyArrayList.this.modiCount;
 		}
-
+		
 		@Override
 		public void add(T e) {
+
 			MyArrayList.this.add(cursor, e);
 			lastRet = cursor;
 			cursor++;
+			incModiCountItr();
+		}
+		
+		private boolean checkModiCount(){
+			return modiCountItr == MyArrayList.this.modiCount;
 		}
 
 		@Override
@@ -34,9 +43,17 @@ public class MyArrayList <T> implements List <T>{
 			return cursor - 1 >= 0;
 		}
 
+		private void incModiCountItr(){
+			modiCountItr ++;
+		}
+
 		@SuppressWarnings("unchecked")
 		@Override
 		public T next() {
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
+			
 			lastRet = cursor;
 			return (T) l[cursor++];
 		}
@@ -49,6 +66,9 @@ public class MyArrayList <T> implements List <T>{
 		@SuppressWarnings("unchecked")
 		@Override
 		public T previous() {
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
 			if (cursor == 0) {
 				throw new NoSuchElementException();
 			}
@@ -64,17 +84,26 @@ public class MyArrayList <T> implements List <T>{
 
 		@Override
 		public void remove() {
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
+
 			if (lastRet == -1) {
 				throw new IllegalStateException();
 			}
 			MyArrayList.this.remove(lastRet);
 			lastRet = -1;
 			cursor--;
+			incModiCountItr();
 			
 		}
 
 		@Override
 		public void set(T e) {
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
+
 			if (lastRet == -1) {
 				throw new IllegalStateException();
 			}
@@ -87,18 +116,28 @@ public class MyArrayList <T> implements List <T>{
 		
 		int cursor = size - 1;
 		int lastRet = -1;
+		int modiCountItr = -1;
 		
 		public MyArrayListReverseIterator(){
 			cursor = size - 1;
 			lastRet = -1;
+			modiCountItr = MyArrayList.this.modiCount;
 		}
-
 		@Override
 		public void add(T e) {
+
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
+
 			MyArrayList.this.add(cursor + 1, e);
 			lastRet = cursor + 1;
+			incModiCountItr();
 		}
-
+		
+		private boolean checkModiCount(){
+			return modiCountItr == MyArrayList.this.modiCount;
+		}
 		@Override
 		public boolean hasNext() {
 			return cursor != 0;
@@ -109,9 +148,17 @@ public class MyArrayList <T> implements List <T>{
 			return cursor < size - 1;
 		}
 
+		private void incModiCountItr(){
+			modiCountItr ++;
+		}
+
 		@SuppressWarnings("unchecked")
 		@Override
 		public T next() {
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
+
 			lastRet = cursor;
 			return (T) l[cursor--];
 		}
@@ -124,6 +171,10 @@ public class MyArrayList <T> implements List <T>{
 		@SuppressWarnings("unchecked")
 		@Override
 		public T previous() {
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
+
 			if (cursor == size - 1) {
 				throw new NoSuchElementException();
 			}
@@ -139,15 +190,24 @@ public class MyArrayList <T> implements List <T>{
 
 		@Override
 		public void remove() {
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
+
 			if (lastRet == -1) {
 				throw new IllegalStateException();
 			}
 			MyArrayList.this.remove(lastRet);
 			lastRet = -1;
+			incModiCountItr();
 		}
 
 		@Override
 		public void set(T e) {
+			if (!checkModiCount()){
+				throw new ConcurrentModificationException();
+			}
+
 			if (lastRet == -1) {
 				throw new IllegalStateException();
 			}
@@ -161,8 +221,11 @@ public class MyArrayList <T> implements List <T>{
 	
 	int size = 0;
 	
+	int modiCount = 0;
+	
 	@SuppressWarnings("unchecked")
 	T[] l = (T[]) new Object[DEF_CAPACITY];
+
 	
 	@Override
 	public void add(int index, T element) {
@@ -174,9 +237,10 @@ public class MyArrayList <T> implements List <T>{
 		}
 		l[index] = element;
 		size ++;
+		incModiCount();
 		
 	}
-
+	
 	@Override
 	public boolean add(T e) {
 		if (size == l.length) {
@@ -184,6 +248,7 @@ public class MyArrayList <T> implements List <T>{
 		}
 		l[size] = e;
 		size ++;
+		incModiCount();
 		return true;
 	}
 
@@ -196,18 +261,21 @@ public class MyArrayList <T> implements List <T>{
 		for (T t : c){
 			add(t);
 		}
+		incModiCount();
 		return true;
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends T> c) {
 		// TODO Auto-generated method stub
+		incModiCount();
 		return false;
 	}
 
 	@Override
 	public void clear() {
 		size = 0;
+		incModiCount();
 	}
 
 	@Override
@@ -245,6 +313,10 @@ public class MyArrayList <T> implements List <T>{
 		return l[index];
 	}
 
+	private void incModiCount(){
+		modiCount++;
+	}
+
 	@Override
 	public int indexOf(Object o) {
 		for (int i = 0; i < size - 1; i++) {
@@ -277,16 +349,12 @@ public class MyArrayList <T> implements List <T>{
 		return new MyArrayListIterator();
 	}
 
-	public ListIterator<T> reverseListIterator() {
-		return new MyArrayListReverseIterator();
-	}
-	
 	@Override
 	public ListIterator<T> listIterator(int index) {
 		// TODO Auto-generated method stub
 		return null;
-	} 
-
+	}
+	
 	@Override
 	public T remove(int index) {
 		T t = null;
@@ -297,8 +365,9 @@ public class MyArrayList <T> implements List <T>{
 		for (int i = index; i < size-1; i++) {
 			l[i] = l[i+1];
 		}
+		incModiCount();
 		return t;
-	}
+	} 
 
 	@Override
 	public boolean remove(Object o) {
@@ -307,6 +376,7 @@ public class MyArrayList <T> implements List <T>{
 			return false;
 		}
 		remove(idx);
+		incModiCount();
 		return true;
 	}
 
@@ -319,7 +389,7 @@ public class MyArrayList <T> implements List <T>{
 		for (Object o : c) {
 			remove(o);
 		}
-		
+		incModiCount();
 		return true;
 	}
 
@@ -327,6 +397,10 @@ public class MyArrayList <T> implements List <T>{
 	public boolean retainAll(Collection<?> c) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public ListIterator<T> reverseListIterator() {
+		return new MyArrayListReverseIterator();
 	}
 
 	@Override
