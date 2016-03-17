@@ -24,9 +24,39 @@ public class ListTest {
 //		testConModiIterator();
 		
 		//3.18
-		test18();
+//		test18();
+		
+		//3.20
+		test20();
 		
 	}
+	
+	public static void test20(){
+		MyLazyLinkedList <Integer> l = new MyLazyLinkedList <>();
+		for (int i = 0; i < 5; i++) {
+			l.add(i);
+		}
+		
+		System.out.println(l); //0,1,2,3,4
+		
+		l.remove(0);
+		System.out.println(l); //(*0),1,2,3,4
+		l.remove(1);
+		System.out.println(l); //(*0),1,(*2),3,4
+		l.add(0,0);
+		System.out.println(l); //0,1,(*2),3,4
+		l.add(2,2);
+		System.out.println(l); //0,1,2,3,4
+		l.remove(4);
+		System.out.println(l); //0,1,2,3,(*4)
+		l.remove(0);
+		System.out.println(l); //(*0),1,2,3,(*4)
+		l.remove(1);
+		System.out.println(l); //1,3
+		l.remove(1); 
+		System.out.println(l); //1
+	}
+	
 	
 	public static void test18(){
 		MyLinkedList <Integer> l = new MyLinkedList<Integer>();

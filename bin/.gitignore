@@ -8,3 +8,7 @@
 /MyArrayList.class
 /MyArrayList$MyArrayListIterator.class
 /MyArrayList$MyArrayListReverseIterator.class
+/MyLazyArrayList.class
+/MyLazyLinkedList.class
+/MyLazyLinkedList$MyBits.class
+/MyLazyLinkedList$Node.class
