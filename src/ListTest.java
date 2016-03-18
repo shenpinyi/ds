@@ -35,9 +35,17 @@ public class ListTest {
 //		test20();
 		
 		//3.21
-		test21();
+//		test21();
+		
+		//3.22
+		test22();
 		
 	}
+	
+	public static void test22(){
+		System.out.println(MyCaculator.caculateSuffix("2 3 + 4.5 * 0.5 - 5 3.0 / -"));
+	}
+	
 	
 	public static void test21(){
 		
