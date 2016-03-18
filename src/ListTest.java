@@ -1,8 +1,13 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ListTest {
 
@@ -27,9 +32,180 @@ public class ListTest {
 //		test18();
 		
 		//3.20
-		test20();
+//		test20();
+		
+		//3.21
+		test21();
 		
 	}
+	
+	public static void test21(){
+		
+		//test MyStack
+		//testMyStack();
+		
+		//read a java file
+		
+		class MyStackNode {
+			int line;
+			String code;
+			
+			MyStackNode(int line, String code){
+				this.line = line;
+				this.code = code;
+			}
+		}
+		
+		String file = "D:\\temp\\MyArrayList.java";
+		MyStack <MyStackNode> ms = new MyStack<>();
+		Pattern p = Pattern.compile("([\\(\\){}\\[\\]]|(/\\*)|(\\*/)|(\\\\\\\\))+?");
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(file));
+			int lineNo = 0;
+			String line;
+			int count = 0;
+			int result = 0;
+			String s = "";
+			String top = "";
+			int topLine = -1;
+			while((line = reader.readLine()) != null){
+				lineNo ++;
+				Matcher m = p.matcher(line);
+				while(m.find()){
+					s = m.group();
+					MyStackNode n = new MyStackNode(lineNo, s);
+					
+					if (ms.peek() != null){
+						top = ms.peek().code;
+						topLine = ms.peek().line;
+					} else {
+						top = "";
+						topLine = -1;
+					}
+					//System.out.println(lineNo + ":" + m.group());
+					
+					// /* has the highest priority, so only */ can pop it out, others will be discard
+					if (top != null && top.equals("/*")) {
+						if (s.equals("*/")) {
+							ms.pop();
+							count++;
+							continue;
+						}
+						continue;
+					}
+					
+					// if it's //, discard the rest of the line
+					if (s.equals("//")){
+						continue;
+					}
+					
+					// if /* { ( [ push
+					if (s.matches("[\\({\\[]|(/\\*)")) {
+						ms.push(n);
+						continue;
+					}
+
+					// if ] ) } */ pull
+					if (s.equals("]")) {
+						if (top == null) {
+							result = 1;
+							break;
+						}
+						
+						if (!top.equals("[")){
+							result = 2;
+							break;
+						}
+						ms.pop();
+						count++;
+					}
+					if (s.equals("}")) {
+						if (top == null) {
+							result = 1;
+							break;
+						}
+						
+						if (!top.equals("{")){
+							result = 2;
+							break;
+						}
+						ms.pop();
+						count++;
+					}
+					if (s.equals(")")) {
+						if (top == null) {
+							result = 1;
+							break;
+						}
+						
+						if (!top.equals("(")){
+							result = 2;
+							break;
+						}
+						ms.pop();
+						count++;
+					}
+					if (s.equals("*/")) {
+						if (top == null) {
+							result = 1;
+							break;
+						}
+						
+						if (!top.equals("/*")){
+							result = 2;
+							break;
+						}
+						ms.pop();
+						count++;
+					}
+				}
+				
+				if (result != 0) {
+					break;
+				}
+			}
+			
+			if (result == 1){
+				System.out.println("line " + lineNo + "\"" + s + "\"" + "hasn't opened");
+			} else if (result == 2) {
+				System.out.println("line " + topLine + "\"" + top + "\"" + "hasn't closed");
+				System.out.println("Or");
+				System.out.println("line " + lineNo + "\"" + s + "\"" + "hasn't opened");
+			} else if (ms.size != 0){
+				System.out.println("line " + topLine + "\"" + top + "\"" + "hasn't closed");
+			} else {
+				System.out.println("Validate okay " + count + " closed");
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//analysis codes
+		
+		//provide error and line number
+	}
+	
+	public static void testMyStack(){
+		MyStack <Integer> ms = new MyStack<>();
+		ms.push(0);
+		ms.push(1);
+		ms.push(2);
+		ms.push(3);
+		System.out.println(ms); //0,1,2,3
+		System.out.println(ms.pop()); //3
+		System.out.println(ms); //0,1,2
+		System.out.println(ms.peek()); //2
+		System.out.println(ms); //0,1,2
+		System.out.println(ms.pop()); //2
+		System.out.println(ms.pop()); //1
+		System.out.println(ms.pop()); //0
+		//System.out.println(ms.pop()); //exception
+		System.out.println(ms.peek()); //null
+		System.out.println(ms); // null
+	}
+	
 	
 	public static void test20(){
 		MyLazyLinkedList <Integer> l = new MyLazyLinkedList <>();

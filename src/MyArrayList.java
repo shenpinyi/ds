@@ -365,6 +365,8 @@ public class MyArrayList <T> implements List <T>{
 		for (int i = index; i < size-1; i++) {
 			l[i] = l[i+1];
 		}
+		l[size - 1] = null;
+		size --;
 		incModiCount();
 		return t;
 	} 
@@ -376,7 +378,6 @@ public class MyArrayList <T> implements List <T>{
 			return false;
 		}
 		remove(idx);
-		incModiCount();
 		return true;
 	}
 
@@ -389,7 +390,6 @@ public class MyArrayList <T> implements List <T>{
 		for (Object o : c) {
 			remove(o);
 		}
-		incModiCount();
 		return true;
 	}
 
