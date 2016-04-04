@@ -38,8 +38,20 @@ public class ListTest {
 //		test21();
 		
 		//3.22
-		test22();
+//		test22();
 		
+		//3.23
+		test23();
+		
+	}
+	
+	public static void test23(){
+		String s = "((5+3)*(6+7)-90/5)*(9+10)+8*10";
+		System.out.println(s);
+		String postfix = MyCaculator.infixToPostfix(s);
+		System.out.println(postfix); 
+		System.out.println(MyCaculator.caculateInfix(s));
+		System.out.println(MyCaculator.postfixToInfix(MyCaculator.infixToPostfix(s)));
 	}
 	
 	public static void test22(){
