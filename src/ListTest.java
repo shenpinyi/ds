@@ -41,7 +41,45 @@ public class ListTest {
 //		test22();
 		
 		//3.23
-		test23();
+		//test23();
+		
+		//3.24
+		test24();
+		
+	}
+	
+	public static void test24(){
+		MyDoubleStack <Integer> ds = new MyDoubleStack <> ();
+		MyStackIntf <Integer> sa = ds.getStackA(), sb = ds.getStackB();
+		sa.push(1);
+		sa.push(2);
+		sa.push(3);
+		
+		sb.push(20);
+		sb.push(19);
+		sb.push(18);
+		
+		System.out.println(ds);
+		
+		System.out.println(sa.peek());
+		System.out.println(sb.peek());
+		
+		System.out.println(sa.pop());
+		System.out.println(sa.pop());
+		sa.push(102);
+		sa.push(103);
+		
+		System.out.println(sb.pop());
+		System.out.println(sb.pop());
+		sb.push(119);
+		sb.push(118);
+		
+		System.out.println(ds);
+		
+		for (int i = 0; i < 20; i ++) {
+			sa.push(i);
+			System.out.println(ds);
+		}
 		
 	}
 	

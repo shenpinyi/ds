@@ -11,3 +11,9 @@
 /MyLinkedList.class
 /MyLinkedList$LinkedListIterator.class
 /MyLinkedList$Node.class
+/ds/
+/MyDoubleStack.class
+/MyStackIntf.class
+/MyDoubleStack$InnerStack.class
+/MyDoubleStack$InnerStackA.class
+/MyDoubleStack$InnerStackB.class
