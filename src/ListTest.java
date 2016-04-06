@@ -44,7 +44,75 @@ public class ListTest {
 		//test23();
 		
 		//3.24
-		test24();
+		//test24();
+		
+		//3.26
+		test26();
+		
+		
+	}
+	
+	public static void test26(){
+		MyMultiStack <Integer> ms = new MyMultiStack<>();
+		
+		MyStackIntf <Integer> s0 = ms.getStack(0);
+		MyStackIntf <Integer> s1 = ms.getStack(1);
+		MyStackIntf <Integer> s2 = ms.getStack(2);
+		
+		s0.push(0);
+		s0.push(1);
+		s0.pop();
+		s0.push(2);
+		s0.push(3);
+		s0.push(4);
+		s0.push(5);
+		s0.push(7);
+		s0.push(8);
+		s0.push(9);
+
+		System.out.println(ms);
+		ms.printAvaliableStack();
+		System.out.println(s0);
+		System.out.println(s1);
+		System.out.println(s2);
+		
+		s1.push(10);
+		s1.push(11);
+		s1.push(12);
+		s1.push(13);
+		s1.push(14);
+		s1.push(15);
+		s1.push(16);
+		s1.push(17);
+		s1.push(18);
+		s1.pop();
+		s1.pop();
+
+		System.out.println(ms);
+		ms.printAvaliableStack();
+		System.out.println(s0);
+		System.out.println(s1);
+		System.out.println(s2);
+
+		
+		s2.push(20);
+		s2.push(21);
+		s2.push(22);
+		s2.push(23);
+		s2.push(24);
+		//s2.push(25);
+		//s2.push(27);
+		//s2.push(28);
+		//s2.push(29);
+		s2.pop();
+		s2.pop();
+		
+		
+		System.out.println(ms);
+		ms.printAvaliableStack();
+		System.out.println(s0);
+		System.out.println(s1);
+		System.out.println(s2);
 		
 	}
 	

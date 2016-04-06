@@ -17,3 +17,11 @@
 /MyDoubleStack$InnerStack.class
 /MyDoubleStack$InnerStackA.class
 /MyDoubleStack$InnerStackB.class
+/MyMultiStack.class
+/MyMultiStack$Node.class
+/MyMultiStack$InnerStack.class
+/MyMultiStack$InnerStackB.class
+/MyMultiStack$NodeStack.class
+/MyMultiStack$NullStack.class
+/MyMultiStack$ValidStack.class
+/MyMultiStack$AvailableStack.class
