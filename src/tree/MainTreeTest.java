@@ -1,14 +1,66 @@
 package tree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MainTreeTest {
 
 	public static void main(String[] args) {
 		System.out.println("Start Tree Test");
 
 		//test binary search tree
-		testxx1();
+		//testxx1();
+		
+		//4.8
+		//test08();
+		
+		//4.9
+		//test09();
+		
+		//4.10
+		test10();
 	}
 	
+	
+	public static void test10() {
+		
+		FileDirectory path = new FileDirectory("D:\\01books\\00Perl");
+		path.printAll();
+		
+	}
+	
+	public static void test08(){
+		
+		List <String> l = new ArrayList<> ();
+		l.addAll(Arrays.asList("-","*","*","a",null,null,"b",null,null,
+				               "+","c",null,null,"d",null,null,
+				               "e", null, null));
+		BinaryTree <String> t = new BinaryTree<>(l);
+		
+		System.out.println(t);
+		
+		System.out.println(t.preorder());
+		System.out.println(t.midorder());
+		System.out.println(t.postorder());
+		
+	}
+	
+	public static void test09(){
+		BinarySearchTree <Integer> t = new BinarySearchTree<>();
+		t.insert(3); //31469257
+		t.insert(1);
+		t.insert(4);
+		t.insert(6);
+		t.insert(9);
+		t.insert(2);
+		t.insert(5);
+		t.insert(7);
+		System.out.println(t);
+		
+		t.remove(3);
+		System.out.println(t);
+	}
 	
 	public static void testxx1() {
 		BinarySearchTree <Integer> t = new BinarySearchTree<>();
