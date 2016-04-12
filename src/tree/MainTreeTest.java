@@ -28,7 +28,26 @@ public class MainTreeTest {
 		//4.11
 		//test1101();
 		//test1102();
-		test11();
+		//test11();
+		
+		//4.12
+		test12();
+	}
+	
+	public static void test12(){
+		MyTreeMap <Integer, String> map = new MyTreeMap <> ();
+		map.put(3, "a"); //31469257
+		map.put(1, "a");
+		map.put(4, "a");
+		map.put(6, "a");
+		map.put(9, "a");
+		map.put(2, "a");
+		map.put(5, "a");
+		map.put(7, "a");
+		
+		System.out.println(map);
+		
+		
 	}
 	
 	public static void test11() {
