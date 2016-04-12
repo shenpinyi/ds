@@ -3,6 +3,7 @@ package tree;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,6 +28,36 @@ public class MainTreeTest {
 		//4.11
 		//test1101();
 		//test1102();
+		test11();
+	}
+	
+	public static void test11() {
+		Set <Integer> t = new MyTreeSet<>(new Comparator <Integer> () {
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				return o2 - o1;
+			}
+		}
+		);
+		t.add(3); //31469257
+		t.add(1);
+		t.add(4);
+		t.add(6);
+		t.add(9);
+		t.add(2);
+		t.add(5);
+		t.add(7);
+		System.out.println(t);
+		
+		t.remove(3);
+		System.out.println(t);
+		
+		Iterator <Integer> iter = t.iterator();
+		
+		while (iter.hasNext()) {
+			System.out.print(" " + iter.next());
+		}
+		
 	}
 	
 	

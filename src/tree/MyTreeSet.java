@@ -12,7 +12,6 @@ public class MyTreeSet <E> implements Set <E> {
 	Comparator <E> comparator = null;
 	
 	public MyTreeSet() {
-		super();
 	}
 	
 	public MyTreeSet(Comparator <E> p) {
@@ -24,6 +23,54 @@ public class MyTreeSet <E> implements Set <E> {
 		TreeNode left;
 		TreeNode parent;
 		E element;	
+	}
+	
+	class MyTreeSetIterator implements Iterator <E> {
+		
+		int idx = -1;
+		TreeNode next = null;
+		
+		@Override
+		public boolean hasNext() {
+			return idx < MyTreeSet.this.size - 1;
+		}
+
+		@Override
+		public E next() {
+			// TODO Auto-generated method stub
+			TreeNode node = findNext(next);
+			
+			if (node == null) {
+				//idx = MyTreeSet.this.size - 1;
+				return null;
+			} else {
+				idx ++;
+				next = node;
+				return next.element;
+			}
+		}
+		
+		private TreeNode findNext(TreeNode t) {
+			if (!this.hasNext()) {
+				return null;
+			}
+			
+			if (idx == -1) {
+				return MyTreeSet.this.findMin(root);
+			}
+			
+			if (t.right != null){
+				return MyTreeSet.this.findMin(t.right);
+			} else {
+				TreeNode parent = t.parent;
+				while (parent != null && MyTreeSet.this.compare(parent.element, t.element) < 0) {
+					parent = parent.parent;
+				}
+				
+				return parent; 
+			}
+		}
+		
 	}
 
 	@Override
@@ -69,8 +116,7 @@ public class MyTreeSet <E> implements Set <E> {
 
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MyTreeSetIterator();
 	}
 
 	@Override
@@ -116,7 +162,6 @@ public class MyTreeSet <E> implements Set <E> {
 		}
 		
 		nodeAdd.parent = t;
-		size++;
 		return t;
 	}
 	
@@ -137,10 +182,15 @@ public class MyTreeSet <E> implements Set <E> {
 		int result = compare(e, t.element);		
 		if (result == 0) {
 			if (t.right == null && t.left == null) {
+				size --;
 				return null;
 			} else if(t.left == null) {
+				size --;
+				t.right.parent = t.parent;
 				return t.right;
 			} else if(t.right == null) {
+				size --;
+				t.left.parent = t.parent;
 				return t.left;
 			} else {
 				TreeNode rep = findMax(t.left);
