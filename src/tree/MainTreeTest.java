@@ -31,7 +31,32 @@ public class MainTreeTest {
 		//test11();
 		
 		//4.12
-		test12();
+		//test12();
+		
+		//4.13
+		test13();
+	}
+	
+	public static void test13(){
+		MyTreeMap <Integer, String> map = new MyTreeMap <> ();
+		map.put(3, "a"); //31469257
+		map.put(1, "a");
+		map.put(4, "a");
+		map.put(6, "a");
+		map.put(9, "a");
+		map.put(2, "a");
+		map.put(5, "a");
+		map.put(7, "a");
+		map.remove(3);
+		map.remove(5);
+		
+		System.out.println(map);
+		
+		Iterator <Integer> iter = map.iterator();
+		while (iter.hasNext()) {
+			System.out.print(iter.next() + " ");
+		}
+		
 	}
 	
 	public static void test12(){
