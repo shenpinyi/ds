@@ -1,5 +1,8 @@
 package tree;
 
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -7,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.swing.JFrame;
 
 public class MainTreeTest {
 
@@ -34,8 +39,59 @@ public class MainTreeTest {
 		//test12();
 		
 		//4.13
-		test13();
+		//test13();
+		
+		//4.14
+		test14();
+		
 	}
+	
+	
+	public static void test14(){
+		int n = 50;
+		int alpha = 10;
+		
+		MyRandomGenerator g1 = new MyRandomGenerator(1, n * alpha);
+		MyRandomGenerator g2 = new MyRandomGenerator(n * alpha);
+		g1.setName("G1");
+		g2.setName("G2");
+		
+		MyTreeMap <Integer, String> map = new MyTreeMap <> ();
+		
+		int i = n;
+		while (i > 0) {
+			int key = g1.getNext();
+			g2.add(key);
+			map.put(key, "a");
+			i--;
+		} 
+
+		System.out.println(map);
+		
+		i = n * n * n;
+		while (i > 0) {
+			
+			int key = g2.getNext();
+			map.remove(key);
+			g1.add(key);
+
+			key = g1.getNext();
+			g2.add(key);
+			map.put(key, "a");
+			i--;
+		}
+		
+		System.out.println(map);
+		map.creatTree();
+
+		//g1.compress();
+		//g2.compress();
+
+		//System.out.println(g1);
+		//System.out.println(g2);
+		
+	}
+
 	
 	public static void test13(){
 		MyTreeMap <Integer, String> map = new MyTreeMap <> ();

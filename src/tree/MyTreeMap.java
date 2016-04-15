@@ -1,10 +1,17 @@
 package tree;
 
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.swing.JFrame;
 
 public class MyTreeMap <K, V> implements Map <K, V>, Iterable <K>{
 	int size = 0;
@@ -363,7 +370,166 @@ public class MyTreeMap <K, V> implements Map <K, V>, Iterable <K>{
 		return new MyTreeMapIterator();
 	}
 	
+	class Node {
+		int x;
+		int y;
+		int width;
+	}
 	
+	class Line {
+		int x1;
+		int y1;
+		int x2;
+		int y2;
+	}
 
+	public void creatTree(){
+		List <Node> nodes = new ArrayList <> ();
+		List <Line> lines = new ArrayList <> ();
+		List <Node> fullNodes = new ArrayList <> ();
+		int maxLevel = getLevel();
+		
+		for (int i = 0; i < (Math.pow(2, (maxLevel + 1)) + 1); i ++) {
+			fullNodes.add(new Node());
+		}
+		
+		createFullTree(1, fullNodes, 0, maxLevel);
+		createTree(1, root, fullNodes, nodes, lines);
+		
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JFrame frame = new JFrame("HelloWorldSwing");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setSize(400, 400);
+                
+                MyCanvas cnvs = new MyCanvas(nodes, lines);
+                cnvs.setSize(1000, 1000);
+                frame.add(cnvs);
+                frame.setVisible(true);
+            }
+        });
+		
+	}
+	
+	public class MyCanvas extends Canvas{
+		
+		private static final long serialVersionUID = 1120409038397998949L;
+		List <Node> nodes;
+		List <Line> lines;
+		
+		public MyCanvas(List <Node> ns, List <Line> ls) {
+			nodes = ns;
+			lines = ls;
+		}
+		
+		public void paint(Graphics g) {
+	        drawNodes(g);
+	        drawLines(g);
+		}
+		
+		private void drawNodes(Graphics g) {
+			for (Node n : nodes) {
+				g.drawOval(n.x, n.y, n.width, n.width);
+			}
+		}
+		
+		private void drawLines(Graphics g) {
+			for (Line l : lines) {
+				g.drawLine(l.x1, l.y1, l.x2, l.y2);
+			}
+			
+		}
+	}
+
+	
+	private void createTree(int id, Entry t, List <Node> fullNodes, List <Node> nodes, List <Line> lines) {
+		Node node = fullNodes.get(id);
+		nodes.add(node);
+		
+		if (t.left != null) {
+			Line line = new Line();
+			line.x1 = node.x;
+			line.y1 = node.y;
+			
+			Node left = fullNodes.get(id * 2);
+			line.x2 = left.x;
+			line.y2 = left.y;
+			
+			lines.add(line);
+			
+			createTree(id * 2, t.left, fullNodes, nodes, lines);
+		}
+
+		if (t.right != null) {
+			Line line = new Line();
+			line.x1 = node.x;
+			line.y1 = node.y;
+			
+			Node right = fullNodes.get(id * 2 + 1);
+			line.x2 = right.x;
+			line.y2 = right.y;
+			
+			lines.add(line);
+			
+			createTree(id * 2 + 1, t.right, fullNodes, nodes, lines);
+		}
+
+	}
+	
+	private int createFullTree(int id, List <Node> fullNodes, int level, int maxLevel){
+		
+		Node node = new Node();
+		
+		int left;
+		int right;
+		int current;
+		
+		int firstId = (int) Math.pow(2, level);
+		
+		if (level == maxLevel) {
+			current = 2 * (id - firstId) + 10;
+		} else {
+			left = createFullTree(id * 2, fullNodes, level + 1, maxLevel);
+			right = createFullTree(id * 2 + 1, fullNodes, level + 1, maxLevel);
+			current = (left + right) / 2;
+		}
+		
+		node.x = current;
+		node.y = 10 + 40 * level;
+		node.width = 3;
+		
+		fullNodes.set(id, node);
+		return current;
+	}
+	
+	
+	public int getLevel() {
+		return getLevel(root, 0);
+	}
+	
+	private int getLevel(Entry t, int level) {
+		int level_right = 0;
+		int level_left = 0;
+		int level_max = 0;
+		
+		if (t.right == null && t.left == null){
+			return level;
+		}
+
+		if (t.right != null) {
+			level_right = getLevel(t.right, level + 1);
+		}
+		
+		if (t.left != null) {
+			level_left = getLevel(t.left, level + 1);
+		}
+
+
+		level_max = Math.max(level_right, level_left); 
+		
+		return level_max; 
+		
+	} 
+	
 
 }
