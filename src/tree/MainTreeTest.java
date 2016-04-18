@@ -45,8 +45,41 @@ public class MainTreeTest {
 		//test14();
 		
 		//4.19
-		test19();
+		//test19();
 		
+		//4.20
+		//test20();
+		
+		//4.22
+		//test22();
+		
+	}
+	
+	public static void test22() {
+		MyAvlTreeSet <Integer> t = new MyAvlTreeSet <> ();
+		
+		t.add(2); System.out.println(t.validateAvl());
+		t.add(1); System.out.println(t.validateAvl());
+		t.add(4); System.out.println(t.validateAvl());
+		t.add(5); System.out.println(t.validateAvl());
+		t.add(9); System.out.println(t.validateAvl());
+		t.add(3); System.out.println(t.validateAvl());
+		t.add(6); System.out.println(t.validateAvl());
+		t.add(7); System.out.println(t.validateAvl());
+		
+		System.out.println(t);
+	}
+	
+	public static void test20() {
+		int k = 5;
+		double count = Math.pow(2, k) - 1;
+		MyAvlTreeSet <Integer> t = new MyAvlTreeSet <> ();
+		
+		for (int i = 1; i <= count; i++) {
+			t.add(i); System.out.println(t.validateAvl());
+		}
+		
+		System.out.println(t);
 	}
 	
 	

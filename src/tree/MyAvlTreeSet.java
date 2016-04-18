@@ -160,7 +160,7 @@ public class MyAvlTreeSet <E> implements Set <E>{
 		r.right = t;
 		
 		r.left.height = Math.max(height(r.left.left), height(r.left.right)) + 1;
-		r.right.height = Math.max(height(r.right.left), height(r.right.left)) + 1;
+		r.right.height = Math.max(height(r.right.left), height(r.right.right)) + 1;
 		r.height = Math.max(height(r.left), height(r.left)) + 1;
 		return r;
 	}
@@ -199,11 +199,48 @@ public class MyAvlTreeSet <E> implements Set <E>{
 		r.left = t;
 		
 		r.left.height = Math.max(height(r.left.left), height(r.left.right)) + 1;
-		r.right.height = Math.max(height(r.right.left), height(r.right.left)) + 1;
+		r.right.height = Math.max(height(r.right.left), height(r.right.right)) + 1;
 		r.height = Math.max(height(r.left), height(r.left)) + 1;
 		return r;
 	}
 	
+	public boolean validateAvl() {
+		
+		if (validateAvl(root) >= -1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private int validateAvl(Node t) {
+		if (t == null) {
+			return -1;
+		}
+		
+		int right = validateAvl(t.right);
+		int left = validateAvl(t.left);
+		
+		if (right < -1) {
+			return right;
+		}
+		
+		if (left < -1) {
+			return left;
+		}
+
+		if (Math.abs(right - left) > 1) {
+			return -3;
+		}
+		
+		int height = Math.max(right, left) + 1;
+		
+		if (height != t.height) {
+			return -2;
+		}
+		
+		return height;
+	}
 
 	@Override
 	public boolean remove(Object o) {
