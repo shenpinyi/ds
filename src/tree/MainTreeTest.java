@@ -42,10 +42,29 @@ public class MainTreeTest {
 		//test13();
 		
 		//4.14
-		test14();
+		//test14();
+		
+		//4.19
+		test19();
 		
 	}
 	
+	
+	public static void test19() {
+		MyAvlTreeSet <Integer> t = new MyAvlTreeSet <> ();
+		
+		t.add(2);
+		t.add(1);
+		t.add(4);
+		t.add(5);
+		t.add(9);
+		t.add(3);
+		t.add(6);
+		t.add(7);
+		
+		System.out.println(t);
+		
+	}
 	
 	public static void test14(){
 		int n = 50;

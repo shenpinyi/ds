@@ -1,7 +1,6 @@
 package tree;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,6 +59,7 @@ public class MyTreeMap <K, V> implements Map <K, V>, Iterable <K>{
 		Entry left;
 		Entry right;
 		Entry parent;
+		int height;
 		
 		Entry next;
 		Entry prev;
