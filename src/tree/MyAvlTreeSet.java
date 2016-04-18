@@ -242,10 +242,69 @@ public class MyAvlTreeSet <E> implements Set <E>{
 		return height;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
+		root = remove((E) o, root);
 		return false;
+	}
+	
+	public Node findMin(Node t) {
+		if (t == null) {
+			return null;
+		}
+		
+		if (t.left == null) {
+			return t;
+		} else {
+			return findMin(t.left);
+		}
+		
+	}
+	
+	public Node remove(E e, Node t) {
+		
+		if (t == null) {
+			return null;
+		}
+		
+		int r = compare(e, t.element);
+		
+		if (r == 0) {
+			
+			if (t.left == null && t.right == null) {
+				return null;
+			} else if (t.left == null) {
+				t = t.right;
+			} else if (t.right == null) {
+				t = t.left;
+			} else {
+				Node rep = findMin(t.right);
+				t.right = remove(rep.element, t.right);
+				t.element = rep.element;
+
+				t.height = Math.max(height(t.right), height(t.left)) + 1;
+				if (height(t.left) >= height(t.right) + 2) {
+					t = rotateLeft(t);
+				}
+				
+			}
+		} else if (r > 0) {
+			t.right = remove(e, t.right);
+			t.height = Math.max(height(t.right), height(t.left)) + 1;
+			if (height(t.left) >= height(t.right) + 2) {
+				t = rotateLeft(t);
+			}
+		} else {
+			t.left = remove(e, t.left);
+			t.height = Math.max(height(t.right), height(t.left));
+			if (height(t.right) >= height(t.left) + 2) {
+				t = rotateRight(t);
+			}
+		}
+		
+		t.height = Math.max(height(t.right), height(t.left)) + 1;
+		return t;
 	}
 
 	@Override

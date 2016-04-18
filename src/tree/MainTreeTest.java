@@ -53,7 +53,45 @@ public class MainTreeTest {
 		//4.22
 		//test22();
 		
+		//4.24
+		test24();
+		
 	}
+	
+	public static void test24() {
+		int k = 3;
+		double count = Math.pow(2, k) - 1;
+		MyAvlTreeSet <Integer> t = new MyAvlTreeSet <> ();
+		
+//		for (int i = 1; i <= count; i++) {
+//			t.add(i); System.out.println(t.validateAvl());
+//		}
+//		
+//		t.remove(1); System.out.println(t.validateAvl());
+//		t.remove(2); System.out.println(t.validateAvl());
+//		t.remove(3); System.out.println(t.validateAvl());
+		
+		t.add(2); System.out.println(t.validateAvl());
+		t.add(1); System.out.println(t.validateAvl());
+		t.add(4); System.out.println(t.validateAvl());
+		t.add(5); System.out.println(t.validateAvl());
+		t.add(9); System.out.println(t.validateAvl());
+		t.add(3); System.out.println(t.validateAvl());
+		t.add(6); System.out.println(t.validateAvl());
+		t.add(7); System.out.println(t.validateAvl());
+		
+		t.remove(2); System.out.println(t.validateAvl());
+		t.remove(1); System.out.println(t.validateAvl());
+		t.remove(4); System.out.println(t.validateAvl());
+		t.remove(5); System.out.println(t.validateAvl());
+		t.remove(9); System.out.println(t.validateAvl());
+		t.remove(3); System.out.println(t.validateAvl());
+		t.remove(6); System.out.println(t.validateAvl());
+		t.remove(7); System.out.println(t.validateAvl());
+		
+		System.out.println(t);
+	}
+	
 	
 	public static void test22() {
 		MyAvlTreeSet <Integer> t = new MyAvlTreeSet <> ();
