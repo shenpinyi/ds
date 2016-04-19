@@ -54,7 +54,49 @@ public class MainTreeTest {
 		//test22();
 		
 		//4.24
-		test24();
+		//test24();
+		
+		//4.27
+		test27();
+		
+	}
+	
+	public static void test27() {
+		MySplayTreeSet <Integer> t = new MySplayTreeSet <> ();
+		
+		t.add(10);
+		t.add(4);
+		t.add(11);
+		t.add(2);
+		t.add(6);
+		t.add(12);
+		t.add(1);
+		t.add(3);
+		t.add(5);
+		t.add(8);
+		t.add(7);
+		t.add(9);
+		t.add(13);
+		
+		t.contains(3);
+		t.contains(9);
+		t.contains(1);
+		t.contains(5);
+		
+//		for (int i = 32; i > 0; i --) {
+//			t.add(i);
+//		}
+//		
+//		System.out.println(t.contains(1));
+//		System.out.println(t.contains(2));
+//		System.out.println(t.contains(3));
+//		System.out.println(t.contains(4));
+//		System.out.println(t.contains(5));
+//		System.out.println(t.contains(6));
+//		System.out.println(t.contains(7));
+
+		System.out.println(t);
+		t.creatTree();
 		
 	}
 	
