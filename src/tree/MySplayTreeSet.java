@@ -297,8 +297,42 @@ public class MySplayTreeSet <E> implements Set <E> {
 
 	@Override
 	public boolean remove(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!this.contains(o)) {
+			return false;
+		}
+		
+		Node left = root.left;
+		Node right = root.right;
+		
+		if (left == null) {
+			root = root.right;
+			root.parent = null;
+			return true;
+		}
+		
+		Node t = findMax(left);
+		root = left;
+		left.parent = null;
+		read(t);
+		t.right = right;
+		right.parent = t;
+		return true;
+	}
+	
+	private Node findMax(Node t) {
+		if (t.right == null) {
+			return t;
+		} else {
+			return findMax(t.right);
+		}
+	}
+	
+	private Node findMin(Node t) {
+		if (t.left == null) {
+			return t;
+		} else {
+			return findMin(t.left);
+		}
 	}
 
 	@Override

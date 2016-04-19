@@ -57,8 +57,38 @@ public class MainTreeTest {
 		//test24();
 		
 		//4.27
-		test27();
+		//test27();
 		
+		//4.28 delete element in a splay tree
+		test28();
+		
+	}
+	
+	public static void test28() {
+		MySplayTreeSet <Integer> t = new MySplayTreeSet <> ();
+		
+		t.add(10);
+		t.add(4);
+		t.add(11);
+		t.add(2);
+		t.add(6);
+		t.add(12);
+		t.add(1);
+		t.add(3);
+		t.add(5);
+		t.add(8);
+		t.add(7);
+		t.add(9);
+		t.add(13);
+		
+		t.contains(3);
+		t.contains(9);
+		t.contains(1);
+		t.contains(5);
+		//System.out.println(t);
+		
+		t.remove(6);
+		System.out.println(t);
 	}
 	
 	public static void test27() {
