@@ -60,8 +60,231 @@ public class MainTreeTest {
 		//test27();
 		
 		//4.28 delete element in a splay tree
-		test28();
+		//test28();
 		
+		//4.29
+		//test29();
+		
+		//4.30
+//		test30();
+		
+	}
+	
+	public static void test29() {
+		int n = 50;
+		int alpha = 10;
+		int found = 0;
+		
+		MyRandomGenerator g1 = new MyRandomGenerator(1, n * alpha);
+		MyRandomGenerator g2 = new MyRandomGenerator(n * alpha);
+		g1.setName("G1");
+		g2.setName("G2");
+		
+		MySplayTreeSet <Integer> t = new MySplayTreeSet<>();
+		
+		int i = n;
+		while (i > 0) {
+			g2.add(i);
+			t.add(i);
+			i--;
+		} 
+		
+		i = n * n;
+		while (i > 0) {
+			
+			int key = g2.getNext();
+			g2.add(key);
+			t.remove(key);
+			t.add(key);
+			i--;
+		}
+
+		//System.out.println(t);
+		
+//		t.findCount = 0;
+//		t.rotateCount = 0;
+//		
+//		i = 10;
+//		while (i > 0) {
+//			int x = n;
+//			while (x > 0) {
+//				found += t.contains(x)?1:0;
+//				x--;
+//			} 
+//			System.out.println("Find: " + t.findCount + "Found:"  + found + "; Rotate: " + t.rotateCount);
+//			i--;
+//		}
+		
+		t.findCount = 0;
+		t.rotateCount = 0;
+		
+		i = 10;
+		while (i > 0) {
+			int x = n;
+			while (x > 0) {
+				found += t.contains(20)?1:0;
+				x--;
+			} 
+			System.out.println("Find: " + t.findCount + "Found:"  + found + "; Rotate: " + t.rotateCount);
+			i--;
+		}
+		//t.creatTree();
+	}
+	
+	public static void test30() {
+		testSplay();
+		testBi();
+		testAvl();
+		
+	}
+	
+	public static void testBi() {
+		int n = 50;
+		int alpha = 10;
+		
+		MyRandomGenerator g1 = new MyRandomGenerator(1, n * alpha);
+		MyRandomGenerator g2 = new MyRandomGenerator(n * alpha);
+		g1.setName("G1");
+		g2.setName("G2");
+		
+		BinarySearchTree <Integer> t = new BinarySearchTree<>();
+
+		int i = n;
+		while (i > 0) {
+			g2.add(i);
+			t.insert(i);
+			i--;
+  	    } 
+//		//System.out.println(t);
+//		
+//		while (i > 0) {
+//			int key = g1.getNext();
+//			g2.add(key);
+//			t.insert(key);
+//			i--;
+//		} 
+//
+//		//System.out.println(t);
+//		
+		i = n * n * n;
+		while (i > 0) {
+			
+			int key = g2.getNext();
+			t.remove(key);
+			g1.add(key);
+
+			key = g1.getNext();
+			g2.add(key);
+			t.insert(key);
+			i--;
+		}
+		
+		
+		i = 1000000;
+		while (i > 0) {
+			
+			int key = g2.getNext();
+			g2.add(key);
+
+			t.contains(key);
+			i--;
+		}
+		System.out.println("Find: " + t.findCount);
+		
+		//System.out.println(t);
+	}
+	
+	public static void testAvl() {
+		int n = 50;
+		int alpha = 10;
+		
+		MyRandomGenerator g1 = new MyRandomGenerator(1, n * alpha);
+		MyRandomGenerator g2 = new MyRandomGenerator(n * alpha);
+		g1.setName("G1");
+		g2.setName("G2");
+		
+		MyTreeMap <Integer, String> t = new MyTreeMap<>();
+		
+//		while (i > 0) {
+//			g2.add(i);
+//			t.put(i, "A");
+//			i--;
+//  	    } 
+		//System.out.println(t);
+
+		
+		int i = n;
+		while (i > 0) {
+			int key = g1.getNext();
+			g2.add(key);
+			t.put(key, "a");
+			i--;
+		} 
+
+		//System.out.println(t);
+		
+		i = n * n * n;
+		while (i > 0) {
+			
+			int key = g2.getNext();
+			t.remove(key);
+			g1.add(key);
+
+			key = g1.getNext();
+			g2.add(key);
+			t.put(key, "a");
+			i--;
+		}
+		
+		i = 10000;
+		while (i > 0) {
+			
+			int key = g2.getNext();
+			g2.add(key);
+
+			t.containsKey(key);
+			i--;
+		}
+		System.out.println("Find: " + t.findCount);
+		
+		//System.out.println(t);
+	}
+	
+	public static void testSplay() {
+		int n = 10;
+		int alpha = 10;
+		int found = 0;
+		
+		MyRandomGenerator g1 = new MyRandomGenerator(1, n * alpha);
+		MyRandomGenerator g2 = new MyRandomGenerator(n * alpha);
+		g1.setName("G1");
+		g2.setName("G2");
+		
+		MySplayTreeSet <Integer> t = new MySplayTreeSet<>();
+		
+		int i = n;
+		while (i > 0) {
+			int key = g1.getNext();
+			g2.add(key);
+			t.add(key);
+			i--;
+		} 
+
+		//System.out.println(t);
+		
+		i = 100;
+		while (i > 0) {
+			
+			int key = g2.getNext();
+			g2.add(key);
+
+			found += t.contains(key)?1:0;
+			System.out.println("Find: " + t.findCount + "Found:"  + found + "; Rotate: " + t.rotateCount);
+			i--;
+		}
+		t.creatTree();
+		
+		//System.out.println(t);
 	}
 	
 	public static void test28() {

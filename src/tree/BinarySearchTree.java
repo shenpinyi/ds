@@ -3,6 +3,7 @@ package tree;
 public class BinarySearchTree <E extends Comparable <? super E>> {
 
 	BinaryNode <E> root;
+	double findCount = 0;
 	
 	public BinarySearchTree() {
 		root = null;
@@ -91,6 +92,7 @@ public class BinarySearchTree <E extends Comparable <? super E>> {
 	}
 	
 	public boolean contains(E e, BinaryNode <E> t) {
+		findCount ++;
 		if (t == null) {
 			return false;
 		}

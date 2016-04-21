@@ -19,6 +19,8 @@ public class MyTreeMap <K, V> implements Map <K, V>, Iterable <K>{
 	Entry head = null;
 	Entry tail = null;
 	
+	double findCount = 0;
+	
 	Comparator <K> comparator;
 	
 	public MyTreeMap(Comparator <K> p){
@@ -112,6 +114,8 @@ public class MyTreeMap <K, V> implements Map <K, V>, Iterable <K>{
 	
 	
 	private Entry findByKey(K key, Entry t) {
+		
+		findCount++;
 		if (t == null) {
 			return null;
 		}

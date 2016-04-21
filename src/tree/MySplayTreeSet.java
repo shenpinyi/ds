@@ -16,6 +16,9 @@ public class MySplayTreeSet <E> implements Set <E> {
 	int size;
 	Node root;
 	
+	double rotateCount = 0;
+	double findCount = 0;
+	
 	Comparator <E> comparator;
 	
 	class Node {
@@ -95,6 +98,7 @@ public class MySplayTreeSet <E> implements Set <E> {
 			}
 
 			if (g == null) {
+				rotateCount ++;
 				if (pd == 1) {
 					t = singleRotateRight(p);
 				} else {
@@ -103,6 +107,7 @@ public class MySplayTreeSet <E> implements Set <E> {
 				root = t;
 				t.parent = null;
 			} else {
+				rotateCount ++;
 				if (pd == 1 && gd == 1) {
 					t = zigRotateRight(g);
 				} else if (gd == -1 && pd == -1) {
@@ -232,6 +237,7 @@ public class MySplayTreeSet <E> implements Set <E> {
 	}
 
 	private Node find(E e, Node t) {
+		findCount ++;
 		if (t == null) {
 			return null;
 		}
@@ -315,7 +321,9 @@ public class MySplayTreeSet <E> implements Set <E> {
 		left.parent = null;
 		read(t);
 		t.right = right;
-		right.parent = t;
+		if (right != null){
+			right.parent = t;
+		}
 		return true;
 	}
 	

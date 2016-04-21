@@ -5,10 +5,14 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
 
+import tree.MySplayTreeSet.Node;
+
 public class MyAvlTreeSet <E> implements Set <E>{
 	Node root;
 	int size;
 	Comparator <E> comparator;
+	
+	double findCount = 0;
 	
 	class Node {
 		E element;
@@ -52,8 +56,25 @@ public class MyAvlTreeSet <E> implements Set <E>{
 
 	@Override
 	public boolean contains(Object o) {
-		// TODO Auto-generated method stub
-		return false;
+		@SuppressWarnings("unchecked")
+		Node node = find((E) o, root);
+		return node != null;
+	}
+	
+	private Node find(E e, Node t) {
+		findCount ++;
+		if (t == null) {
+			return null;
+		}
+		
+		int r = compare(e, t.element);
+		if (r == 0) {
+			return t;
+		} else if (r > 0) {
+			return find(e, t.right);
+		} else {
+			return find(e, t.left);
+		}
 	}
 
 	@Override
