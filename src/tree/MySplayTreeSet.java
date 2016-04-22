@@ -43,7 +43,7 @@ public class MySplayTreeSet <E> implements Set <E> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private int compare(E e1, E e2) {
+	public int compare(E e1, E e2) {
 		if (comparator != null) {
 			return comparator.compare(e1, e2);
 		} else {

@@ -1,17 +1,13 @@
 package tree;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeSet;
-
-import javax.swing.JFrame;
 
 public class MainTreeTest {
 
@@ -68,8 +64,229 @@ public class MainTreeTest {
 		//4.30
 //		test30();
 		
+		//4.31
+		//test31();
+		
+		//4.37
+		//test37();
+		
+		//4.41
+		test41();
+		
+		
 	}
 	
+	public static void test41() {
+		int n = 200000;
+		
+		MyRandomGenerator g1 = new MyRandomGenerator(1, n);
+		g1.setName("G1");
+		
+		MySplayTreeSet <Integer> t = new MySplayTreeSet<>();
+		
+		int i = n;
+		while (i > 0) {
+			int key = g1.getNext();
+			t.add(key);
+			i--;
+		} 
+		//System.out.println(t);
+		
+		Long m1 = (long) 0, m2 = (long) 0;
+		m1 = System.currentTimeMillis();
+		int x = 1000;
+		List<List<Integer>> ll = null;
+		while (x >0) {
+			ll = new ArrayList<> ();
+			getLayerValues(t.root, 0, ll);
+			x --;
+		}
+		m2 = System.currentTimeMillis();
+
+		//System.out.println(ll);
+		System.out.println((m2 - m1));
+	}
+	
+	public static void getLayerValues(MySplayTreeSet<Integer>.Node t, int level, List<List<Integer>> ll){
+		
+		if (t == null) {
+			return;
+		}
+		
+		List<Integer> l;
+		if (ll.size() <= level) {
+			l = new ArrayList<Integer>();
+			ll.add(l);
+		}
+		l = ll.get(level);
+		
+		l.add(t.element);
+		
+		getLayerValues(t.left, level + 1, ll);
+		getLayerValues(t.right, level + 1, ll);
+		
+	}
+	
+	
+	public static void test37() {
+		
+		int n = 50;
+		
+		MyRandomGenerator g1 = new MyRandomGenerator(1, n);
+		g1.setName("G1");
+		
+		MySplayTreeSet <Integer> t = new MySplayTreeSet<>();
+		
+		int i = n;
+		while (i > 0) {
+			int key = g1.getNext();
+			t.add(key);
+			i--;
+		} 
+		
+		count = 0;
+		//System.out.println(t);
+		getValues(3, 37, t.root);
+		System.out.println("\n" + count);
+
+		
+	}
+	
+	static int count = 0;
+	
+	private static void getValues(int k1, int k2, MySplayTreeSet<Integer>.Node t) {
+		
+		count ++;
+		
+		if (t == null) {
+			return;
+		}
+		
+		if (t.element > k1 && t.left != null) {
+			getValues(k1, k2, t.left);
+		}
+		
+		if (t.element >= k1 && t.element <= k2) {
+			System.out.print(t.element + " ");
+		}
+		
+		if (t.element < k2 && t.right != null) {
+			getValues(k1, k2, t.right);
+		}
+		
+		return;
+	}
+	
+	public static void test31() {
+		int n = 50;
+		int alpha = 10;
+		int found = 0;
+		
+		MyRandomGenerator g1 = new MyRandomGenerator(1, n * alpha);
+		MyRandomGenerator g2 = new MyRandomGenerator(n * alpha);
+		g1.setName("G1");
+		g2.setName("G2");
+		
+		MySplayTreeSet <Integer> t = new MySplayTreeSet<>();
+		
+		int i = n;
+		while (i > 0) {
+			g2.add(i);
+			t.add(i);
+			i--;
+		} 
+		
+		i = n * n;
+		while (i > 0) {
+			
+			int key = g2.getNext();
+			g2.add(key);
+			t.remove(key);
+			t.add(key);
+			i--;
+		}
+		
+		System.out.println(getLeafCount(t.root) + "");
+		System.out.println(getNodeCount(t.root) + "");
+		System.out.println(getFullNodeCount(t.root) + "");
+		System.out.println(checkBiSearchTree(t.root) + "");
+		
+	}
+
+	private static boolean checkBiSearchTree(MySplayTreeSet<Integer>.Node t) {
+		if (t == null) {
+			return true;
+		}
+		
+		boolean r1 = true, r2 = true;
+		if(t.right != null) {
+			r1 = (t.right.element > t.element) && checkBiSearchTree(t.right);
+		}
+		
+		if(t.left != null) {
+			r2 = (t.element > t.left.element) && checkBiSearchTree(t.left);
+		}
+		
+		return r1 && r2;
+	}
+
+	private static int getFullNodeCount(MySplayTreeSet<Integer>.Node t) {
+		if (t == null) {
+			return 0;
+		}
+		
+		if (t.right == null && t.left == null) {
+			return 0;
+		}
+		
+		int left = getFullNodeCount(t.left);
+		int right = getFullNodeCount(t.right);
+		int current = left + right;
+		
+		if(t.right != null && t.left != null) {
+			current ++;
+		}
+		
+		return current;
+	}
+
+	private static int getNodeCount(MySplayTreeSet<Integer>.Node t) {
+		if (t == null) {
+			return 0;
+		}
+		
+		if (t.right == null && t.left == null) {
+			return 0;
+		}
+		
+		int left = getNodeCount(t.left);
+		int right = getNodeCount(t.right);
+		int current = left + right;
+		
+		if(t.right != null || t.left != null) {
+			current ++;
+		}
+		
+		return current;
+	}
+
+	private static int getLeafCount(MySplayTreeSet<Integer>.Node t) {
+		if (t == null) {
+			return 0;
+		}
+		
+		if (t.right == null && t.left == null) {
+			return 1;
+		}
+		
+		int left = getLeafCount(t.left);
+		int right = getLeafCount(t.right);
+		
+		return left + right;
+		
+		
+	}
+
 	public static void test29() {
 		int n = 50;
 		int alpha = 10;
