@@ -1,3 +1,4 @@
+package list;
 
 public interface MyStackIntf <T> {
     public T pop();
