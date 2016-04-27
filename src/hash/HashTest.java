@@ -4,6 +4,7 @@ public class HashTest {
 
 	public static void main(String[] args) {
 		
+		//5.1
 		test01();
 
 	}
