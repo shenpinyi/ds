@@ -1,10 +1,15 @@
 package hash;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class LinearProbingHashTable <T> implements MyHashTable <T> {
 	
 	private final int DEF_TABLE_SIZE = 10;
-	private int currentSize;
+	private final double MAX_FILL_FACTOR = 0.5;
+	private int currentSize = 0;
 	private HashEntry<T>[] elements;
+	private long capacity;
 	
 	@SuppressWarnings("hiding")
 	class HashEntry <T> {
@@ -23,12 +28,12 @@ public class LinearProbingHashTable <T> implements MyHashTable <T> {
 	
 	
 	public LinearProbingHashTable() {
-		currentSize = DEF_TABLE_SIZE;
+		capacity = DEF_TABLE_SIZE;
 		makeEmpty();
 	}
 
 	public LinearProbingHashTable(int size) {
-		currentSize = size;
+		capacity = size;
 		makeEmpty();
 	}
 	
@@ -103,7 +108,20 @@ public class LinearProbingHashTable <T> implements MyHashTable <T> {
 
 	@Override
 	public void makeEmpty() {
-		elements = new HashEntry[currentSize];
+		elements = new HashEntry[(int) capacity];
+	}
+	
+	public void rehash(long cap) {
+		capacity = cap;
+		HashEntry[] oldElements = elements;
+		elements = new HashEntry[(int) capacity];
+		currentSize = 0;
+		
+		for (int i = 0; i < oldElements.length; i++) {
+			if (oldElements[i] != null && oldElements[i].isActive) {
+				insert((T) oldElements[i].element);
+			}
+		}
 	}
 	
 	public String toString() {

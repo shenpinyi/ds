@@ -3,21 +3,25 @@ package hash;
 import java.util.LinkedList;
 import java.util.List;
 
+import utils.PrimeNumber;
+
 public class SeparateChainingHashTable <T> implements MyHashTable <T> {
 	
-	private int DEF_HASH_TABLE_SIZE = 10;
-	private int currentSize;
+	private final int DEF_HASH_TABLE_SIZE = 10;
+	private final double MAX_FILL_FACTOR = 0.5;
+	private long capacity;
+	private long currentSize = 0;
 	
 	private List<Object>[] elements;
 
 	@SuppressWarnings("unchecked")
 	public SeparateChainingHashTable() {
-		currentSize = DEF_HASH_TABLE_SIZE;
+		capacity = DEF_HASH_TABLE_SIZE;
 		makeEmpty();
 	}
 	
 	public SeparateChainingHashTable( int size ) {
-		currentSize = size;
+		capacity = size;
 		makeEmpty();
 	}
 
@@ -35,7 +39,32 @@ public class SeparateChainingHashTable <T> implements MyHashTable <T> {
 			return;
 		}
 		
+		currentSize ++;
 		list.add(0, t);
+		//checkHash();
+	}
+	
+	private void checkHash() {
+		double factor = ((double) currentSize) / ((double) capacity);
+		
+		if (factor >= MAX_FILL_FACTOR) {
+			rehash(PrimeNumber.get(capacity));
+		}
+	}
+	
+	public void rehash(long cap) {
+		capacity = cap;
+		List<Object>[] oldElements = elements;
+		elements = new LinkedList[(int) capacity];
+		currentSize = 0;
+		
+		for (int i = 0; i < oldElements.length; i++) {
+			if (oldElements[i] != null) {
+				for (Object t : oldElements[i]) {
+					insert((T) t);
+				}
+			}
+		}
 	}
 	
 	private int getIdx(T t) {
@@ -61,6 +90,7 @@ public class SeparateChainingHashTable <T> implements MyHashTable <T> {
 		}
 		
 		list.remove(t);
+		currentSize --;
 	}
 
 	@Override
@@ -77,17 +107,23 @@ public class SeparateChainingHashTable <T> implements MyHashTable <T> {
 
 	@Override
 	public void makeEmpty() {
-		elements = new LinkedList[currentSize];
+		elements = new LinkedList[(int) capacity];
+		currentSize = 0;
 	}
 	
 	public String toString() {
 		StringBuffer buff = new StringBuffer();
-		
+		buff.append("Capacity:" + capacity + "\r\n");
+		buff.append("CurrentSize:" + currentSize + "\r\n");
 		for (int i = 0; i < elements.length; i++) {
 			List<Object> list = elements[i];
 			if (list != null) {
-				buff.append("(" + i + ")");
+				buff.append("(" + i + ") ");
 				buff.append(list);
+				buff.append("\r\n");
+			} else {
+				buff.append("(" + i + ") ");
+				buff.append("null");
 				buff.append("\r\n");
 			}
 		}
