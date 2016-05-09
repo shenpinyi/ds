@@ -22,6 +22,18 @@ public class MyLeftistHeap <T extends Comparable <? super T>> {
 		size = 0;
 	}
 	
+	public MyLeftistHeap(T[] items) {
+		root = null;
+		size = 0;
+		buildHeap(items);
+	}
+	
+	public void buildHeap(T[] items) {
+		
+		
+		
+	}
+	
 	public void insert(T t) {
 		Entry h = new Entry();
 		h.element = t;

@@ -2,6 +2,9 @@ package heap;
 
 public class HeapTest {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 //		test01();
@@ -10,8 +13,43 @@ public class HeapTest {
 		
 //		test03();
 		
-		test04();
+//		test04();
+		
+		test32();
 
+	}
+	
+	
+	private static void test32() {
+		MyBinomialHeap <Integer> h = new MyBinomialHeap<>();
+		
+		h.insert(18);
+		h.insert(16);
+		h.insert(26);
+		h.insert(14);
+		h.insert(65);
+		h.insert(24);
+		h.insert(21);
+		h.insert(12);
+		h.insert(65);
+		h.insert(24);
+		h.insert(51);
+		h.insert(23);
+		h.insert(13);
+		
+		MyBinomialHeap <Integer> h2 = new MyBinomialHeap<>();
+		
+		h2.insert(55);
+		h2.insert(29);
+		h2.insert(11);
+		h2.insert(2);
+		h2.insert(18);
+		h2.insert(15);
+		h2.insert(4);
+		
+		h.merge(h2);
+
+		System.out.println(h);
 	}
 	
 	private static void test04() {
